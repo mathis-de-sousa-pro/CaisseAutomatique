@@ -20,8 +20,12 @@ namespace CaisseAutomatique.Model.Automates.Etats
         {
             return evt switch
             {
-                Evenement.SCAN => new EtatAttenteArticle(this.automate),
+                Evenement.SCAN => new EtatAttenteDepot(this.automate),
                 Evenement.PAYE => new EtatFin(this.automate),
+                Evenement.DEPOSE or Evenement.RETIRE =>
+                    this.automate.Caisse.PoidsBalance != this.automate.Caisse.PoidsAttendu
+                        ? new EtatProblemePoids(this.automate, this)
+                        : this,
                 _ => this
             };
         }

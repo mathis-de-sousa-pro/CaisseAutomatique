@@ -18,7 +18,14 @@ namespace CaisseAutomatique.Model.Automates.Etats
         {
             if (evt == Evenement.SCAN)
             {
-                return new EtatAttenteArticle(this.automate);
+                return new EtatAttenteDepot(this.automate);
+            }
+            else if (evt == Evenement.DEPOSE || evt == Evenement.RETIRE)
+            {
+                if (this.automate.Caisse.PoidsBalance != this.automate.Caisse.PoidsAttendu)
+                {
+                    return new EtatProblemePoids(this.automate, this);
+                }
             }
             return this;
         }

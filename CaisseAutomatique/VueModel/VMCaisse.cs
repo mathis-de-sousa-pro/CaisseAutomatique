@@ -147,6 +147,8 @@ namespace CaisseAutomatique.VueModel
         /// <param name="vueArticle">Vue de l'article posé sur la balance</param>
         public void PoseUnArticleSurLaBalance(VueArticle vueArticle)
         {
+            this.metier.PoserArticleSurBalance(vueArticle.Article);
+            this.automate.Activer(Evenement.DEPOSE);
         }
 
         /// <summary>
@@ -155,6 +157,8 @@ namespace CaisseAutomatique.VueModel
         /// <param name="vueArticle">Vue de l'article enlevé de la balance</param>
         public void EnleveUnArticleDeLaBalance(VueArticle vueArticle)
         {
+            this.metier.EnleverArticleDeLaBalance(vueArticle.Article);
+            this.automate.Activer(Evenement.RETIRE);
         }
 
         /// <summary>
