@@ -56,7 +56,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="LightBlue">
-                <TextBlock x:Name="TextBlockMessageCaisse" Text="Message" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" TextWrapping="Wrap" Foreground="Black"/>
+                <TextBlock x:Name="TextBlockMessageCaisse" Text="{Binding Message}" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" TextWrapping="Wrap" Foreground="Black"/>
             </Grid>
             <Grid Grid.Row="1" Background="AliceBlue">
                 <DataGrid Background="AliceBlue"  ItemsSource="{Binding Articles}" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalScrollBarVisibility="Disabled">
