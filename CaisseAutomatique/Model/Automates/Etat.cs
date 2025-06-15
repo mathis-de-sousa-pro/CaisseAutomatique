@@ -1,11 +1,13 @@
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CaisseAutomatique.Model.Automates
 {
     /// <summary>
     /// Etat abstrait de l'automate
     /// </summary>
-    public abstract class Etat
+    public abstract class Etat : INotifyPropertyChanged
     {
         /// <summary>
         /// Automate possédant l'état
@@ -33,6 +35,14 @@ namespace CaisseAutomatique.Model.Automates
         /// <summary>
         /// Message associé à l'état
         /// </summary>
+
         public abstract string Message { get; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

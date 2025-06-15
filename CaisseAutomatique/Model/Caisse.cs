@@ -117,9 +117,13 @@ namespace CaisseAutomatique.Model
         /// Enregistre un article scanné par le client
         /// </summary>
         /// <param name="article">Article scanné</param>
-        public void EnregistrerArticle(Article article)
+        /// <param name="quantite">Quantité d'articles à enregistrer</param>
+        public void EnregistrerArticle(Article article, int quantite = 1)
         {
-            this.articles.Add(article);
+            for (int i = 0; i < quantite; i++)
+            {
+                this.articles.Add(article);
+            }
             this.dernierArticleScanne = article;
             this.NotifyPropertyChanged(nameof(Articles));
         }
