@@ -6,5 +6,8 @@ namespace CaisseAutomatique.Model.Automates
     /// </summary>
     public enum Evenement
     {
+        SCAN,
+        PAYE,
+        RESET
     }
 }
