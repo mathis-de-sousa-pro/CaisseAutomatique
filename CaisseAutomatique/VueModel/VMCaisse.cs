@@ -6,18 +6,24 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CaisseAutomatique.Model.Automates;
 
 namespace CaisseAutomatique.VueModel
 {
     /// <summary>
     /// Vue-Model de la caisse automatique
     /// </summary>
-    public class VMCaisse
+    public class VMCaisse : INotifyPropertyChanged
     {
         /// <summary>
         /// La caisse automatique (couche métier)
         /// </summary>
         private Caisse metier;
+
+        /// <summary>
+        /// Automate pilotant la caisse
+        /// </summary>
+        private Automate automate;
 
         /// <summary>
         /// Liste des articles de la caisse
@@ -26,16 +32,21 @@ namespace CaisseAutomatique.VueModel
         private ObservableCollection<Article> articles;
 
         /// <summary>
+        /// Message affiché par la caisse
+        /// </summary>
+        public string Message => automate.Message;
+
+        /// <summary>
         /// La caisse est-elle disponible pour un nouveau client
         /// </summary>
         private bool estDisponible;
-        public bool EstDisponible 
-        { 
+        public bool EstDisponible
+        {
             get => estDisponible;
             set
             {
                 estDisponible = value;
-                //this.NotifyPropertyChanged();
+                this.NotifyPropertyChanged();
             }
         }
 
@@ -43,15 +54,14 @@ namespace CaisseAutomatique.VueModel
         /// Constructeur
         /// </summary>
         public VMCaisse()
-        { 
-
+        {
             //Initialisation
-            
-
             this.EstDisponible = true;
             this.metier = new Caisse();
             this.metier.PropertyChanged += Metier_PropertyChanged;
             this.articles = new ObservableCollection<Article>();
+            this.automate = new Automate();
+            this.automate.PropertyChanged += Automate_PropertyChanged;
             this.AjouterLigneTotalEtResteAPayer();
         }
 
@@ -91,6 +101,17 @@ namespace CaisseAutomatique.VueModel
                 foreach (Article article in this.metier.Articles) this.Articles.Add(article);
                 this.AjouterLigneTotalEtResteAPayer();
                 this.EstDisponible = true;
+            }
+        }
+
+        /// <summary>
+        /// Notification de l'automate observé
+        /// </summary>
+        private void Automate_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Automate.Message))
+            {
+                this.NotifyPropertyChanged(nameof(Message));
             }
         }
 
@@ -187,6 +208,13 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void Scan()
         {
+        }
+
+        // Implementation of INotifyPropertyChanged
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
