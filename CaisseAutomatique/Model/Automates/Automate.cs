@@ -25,6 +25,7 @@ namespace CaisseAutomatique.Model.Automates
         {
             this.caisse = caisse;
             this.etatCourant = new Etats.EtatAttenteClient(this);
+            this.etatCourant.PropertyChanged += EtatCourant_PropertyChanged;
         }
 
         /// <summary>
@@ -34,8 +35,20 @@ namespace CaisseAutomatique.Model.Automates
         public void Activer(Evenement evt)
         {
             this.etatCourant.Action(evt);
-            this.etatCourant = this.etatCourant.Transition(evt);
+            Etat nouvelEtat = this.etatCourant.Transition(evt);
+            if (nouvelEtat != this.etatCourant)
+            {
+                this.etatCourant.PropertyChanged -= EtatCourant_PropertyChanged;
+                nouvelEtat.PropertyChanged += EtatCourant_PropertyChanged;
+            }
+            this.etatCourant = nouvelEtat;
             NotifyPropertyChanged(nameof(Message));
+        }
+
+        private void EtatCourant_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ScanArticleDenombrable")
+                NotifyPropertyChanged("ScanArticleDenombrable");
         }
 
         // INotifyPropertyChanged implementation

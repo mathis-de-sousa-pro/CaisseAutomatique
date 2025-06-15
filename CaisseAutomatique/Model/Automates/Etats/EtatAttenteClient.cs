@@ -11,13 +11,27 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
-            // Pas d'action pour le moment
+            if (evt == Evenement.SCAN && this.automate.Caisse.DernierArticleScanne != null)
+            {
+                if (!this.automate.Caisse.DernierArticleScanne.IsDenombrable)
+                {
+                    this.automate.Caisse.EnregistrerArticle(this.automate.Caisse.DernierArticleScanne);
+                }
+                else
+                {
+                    NotifyPropertyChanged("ScanArticleDenombrable");
+                }
+            }
         }
 
         public override Etat Transition(Evenement evt)
         {
             if (evt == Evenement.SCAN)
             {
+                if (this.automate.Caisse.DernierArticleScanne != null && this.automate.Caisse.DernierArticleScanne.IsDenombrable)
+                {
+                    return new EtatSaisieQuantite(this.automate);
+                }
                 return new EtatAttenteDepot(this.automate);
             }
             else if (evt == Evenement.DEPOSE || evt == Evenement.RETIRE)

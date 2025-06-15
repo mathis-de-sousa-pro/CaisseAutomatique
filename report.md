@@ -23,3 +23,16 @@
 ### Travail réalisé sur le `VueModel`
 - lors du scan d'un article ou du paiement, appel des nouvelles méthodes du métier puis activation des évènements de l'automate
 - prise en compte du reset pour remettre la vue dans son état initial
+
+### Gestion des articles dénombrables
+- implémentation de `INotifyPropertyChanged` dans `Etat` pour que chaque état puisse notifier l'automate
+- observation de l'état courant par `Automate` et propagation de l'évènement `ScanArticleDenombrable`
+- ajout de l'évènement **SAISIEQUANTITE** et création du nouvel état `EtatSaisieQuantite`
+- adaptation des états `EtatAttenteClient` et `EtatAttenteArticle` pour distinguer les articles dénombrables :
+  - enregistrement immédiat pour un article non dénombrable
+  - notification `ScanArticleDenombrable` et passage dans `EtatSaisieQuantite` sinon
+- mise à jour de `Caisse.EnregistrerArticle` pour accepter une quantité
+- ouverture de l'écran de saisie de quantité par le `VueModel` lorsqu'un article dénombrable est scanné
+
+### Automate actuel
+L'automate comporte désormais les états : `EtatAttenteClient`, `EtatAttenteDepot`, `EtatAttenteArticle`, `EtatProblemePoids`, `EtatSaisieQuantite` et `EtatFin` reliés par les évènements **SCAN**, **DEPOSE**, **RETIRE**, **PAYE**, **RESET** et **SAISIEQUANTITE** permettant de gérer la saisie de quantité pour les articles dénombrables.

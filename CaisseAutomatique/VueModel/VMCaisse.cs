@@ -113,6 +113,10 @@ namespace CaisseAutomatique.VueModel
             {
                 this.NotifyPropertyChanged(nameof(Message));
             }
+            else if (e.PropertyName == "ScanArticleDenombrable")
+            {
+                this.OuvrirEcranSelectionQuantite();
+            }
         }
 
         /// <summary>
@@ -137,7 +141,8 @@ namespace CaisseAutomatique.VueModel
         /// <param name="vueArticle">Vue de l'article scanné</param>
         public void PasseUnArticleDevantLeScannair(VueArticle vueArticle)
         {
-            this.metier.EnregistrerArticle(vueArticle.Article);
+            // On mémorise simplement l'article scanné, il sera enregistré par l'automate
+            this.metier.EnregistrerArticle(vueArticle.Article, 0);
             this.Scan();
         }
 
@@ -168,6 +173,7 @@ namespace CaisseAutomatique.VueModel
         public void SaisirNombreArticle(int nbArticle)
         {
             this.metier.SaisieQuantite(nbArticle);
+            this.automate.Activer(Evenement.SAISIEQUANTITE);
         }
 
         /// <summary>

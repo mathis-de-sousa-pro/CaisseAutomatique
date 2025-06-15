@@ -13,21 +13,41 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
-            // aucune action spécifique
+            if (evt == Evenement.SCAN && this.automate.Caisse.DernierArticleScanne != null)
+            {
+                if (!this.automate.Caisse.DernierArticleScanne.IsDenombrable)
+                {
+                    this.automate.Caisse.EnregistrerArticle(this.automate.Caisse.DernierArticleScanne);
+                }
+                else
+                {
+                    NotifyPropertyChanged("ScanArticleDenombrable");
+                }
+            }
         }
 
         public override Etat Transition(Evenement evt)
         {
-            return evt switch
+            if (evt == Evenement.SCAN)
             {
-                Evenement.SCAN => new EtatAttenteDepot(this.automate),
-                Evenement.PAYE => new EtatFin(this.automate),
-                Evenement.DEPOSE or Evenement.RETIRE =>
-                    this.automate.Caisse.PoidsBalance != this.automate.Caisse.PoidsAttendu
-                        ? new EtatProblemePoids(this.automate, this)
-                        : this,
-                _ => this
-            };
+                if (this.automate.Caisse.DernierArticleScanne != null && this.automate.Caisse.DernierArticleScanne.IsDenombrable)
+                {
+                    return new EtatSaisieQuantite(this.automate);
+                }
+                return new EtatAttenteDepot(this.automate);
+            }
+            else if (evt == Evenement.PAYE)
+            {
+                return new EtatFin(this.automate);
+            }
+            else if (evt == Evenement.DEPOSE || evt == Evenement.RETIRE)
+            {
+                if (this.automate.Caisse.PoidsBalance != this.automate.Caisse.PoidsAttendu)
+                {
+                    return new EtatProblemePoids(this.automate, this);
+                }
+            }
+            return this;
         }
 
         public override string Message => "Scannez le produit suivant !";
