@@ -1,0 +1,22 @@
+﻿<Window x:Class="CaisseAutomatique.Vue.EcranSelectionQuantite"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CaisseAutomatique.Vue"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Topmost = "True"
+        Title="Article dénombrable" Height="250" Width="444">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center">Saisir la quantité :</TextBlock>
+        <TextBox Width="150" Grid.Row="1" x:Name="ZoneSaisie" PreviewTextInput="ZoneSaisie_PreviewTextInput" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center">1</TextBox>
+        <Button x:Name="BoutonValider" Margin="10" Grid.Row="2" FontSize="30" MouseEnter="Button_MouseEnter" Click="BoutonValider_Click">Valider</Button>
+    </Grid>
+</Window>

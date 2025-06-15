@@ -1,0 +1,83 @@
+﻿<Window x:Class="CaisseAutomatique.Vue.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CaisseAutomatique"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Title="Caisse automatique" Height="720" Width="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="ZonePrincipale" Grid.Column="0">
+            <Image Source="Ressources/Caisse2.png" Panel.ZIndex="0"></Image>
+            <Grid x:Name="ZonePrincipaleSelection" Panel.ZIndex="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="164*"/>
+                    <ColumnDefinition Width="53*"/>
+                    <ColumnDefinition Width="117*"/>
+                    <ColumnDefinition Width="55*"/>
+                    <ColumnDefinition Width="98*"/>
+                    <ColumnDefinition Width="170*"/>
+                    <ColumnDefinition Width="71*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="54*"/>
+                    <RowDefinition Height="107*"/>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="86*"/>
+                    <RowDefinition Height="79*"/>
+                    <RowDefinition Height="221*"/>
+                </Grid.RowDefinitions>
+                <Grid  Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" x:Name="GridSelectionZoneArticlesAVenir">
+                    <Grid Background="Transparent" Opacity="0.25" x:Name="GridSelectionZoneArticlesAVenirBackground" Panel.ZIndex="0"/>
+                    <Canvas x:Name="ZoneArticlesAVenirCanvas" Panel.ZIndex="1" Background="Transparent"/>
+                </Grid>
+                <Grid Background="Transparent" Opacity="0.25" Grid.Row="1" Grid.Column="5" x:Name="GridSelectionZonePaiement">
+                </Grid>
+                <Grid Background="Transparent" Opacity="0.25" Grid.Row="0" Grid.RowSpan="3" Grid.Column="3" Grid.ColumnSpan="2" x:Name="GridSelectionZoneScan" MouseEnter="GridSelectionZoneScan_MouseEnter">
+                </Grid>
+                <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="4" Grid.ColumnSpan="3" x:Name="GridSelectionZoneArticlesEnregistres">
+                    <Grid Background="Transparent" Opacity="0.25" x:Name="GridSelectionZoneArticlesEnregistresBackground" Panel.ZIndex="0"/>
+                    <Canvas x:Name="ZoneArticlesEnregistresCanvas" Panel.ZIndex="1" Background="Transparent"/>
+                </Grid>
+            </Grid>
+            <Canvas x:Name="CanvasDrag" Panel.ZIndex="2"/>
+        </Grid>
+        <Grid x:Name="ZoneMenu" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="LightBlue">
+                <TextBlock x:Name="TextBlockMessageCaisse" Text="Message" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" TextWrapping="Wrap" Foreground="Black"/>
+            </Grid>
+            <Grid Grid.Row="1" Background="AliceBlue">
+                <DataGrid Background="AliceBlue"  ItemsSource="{Binding Articles}" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalScrollBarVisibility="Disabled">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nom de l'article" Width ="240" Binding="{Binding Nom}" />
+                        <DataGridTextColumn Header="Prix" Width ="70" Binding="{Binding Prix, StringFormat=N2}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid Grid.Row="2" Background="AliceBlue">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Margin="10" Grid.Row ="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30">Client suivant</TextBlock>
+                <StackPanel x:Name="PanelClient" Grid.Row="1" IsEnabled="{Binding EstDisponible, Mode=TwoWay}">
+                    <Button x:Name="ClientEtudiant" Margin="12" FontSize="30" Click="ClientEtudiant_Click">Etudiant</Button>
+                    <Button x:Name="ClientGroupe" Margin="12" FontSize="30" Click="ClientGroupe_Click">Groupe</Button>
+                    <Button x:Name="ClientAleatoire" Margin="12" FontSize="30" Click="ClientAleatoire_Click">Aléatoire</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

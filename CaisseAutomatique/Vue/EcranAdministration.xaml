@@ -1,0 +1,36 @@
+﻿<Window x:Class="CaisseAutomatique.Vue.EcranAdministration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CaisseAutomatique.Vue"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Topmost = "True"
+        Title="Administration" Height="250" Width="444">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="AnnulerUnArticle" Grid.Column="0" Grid.Row="0" Margin="20" FontSize="25" Click="AnnulerUnArticle_Click">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Annuler un article</TextBlock>
+        </Button>
+        <Button x:Name="AnnulerTousLesArticles" Grid.Column="1" Grid.Row="0"  Margin="20" FontSize="25" Click="AnnulerTousLesArticles_Click">
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center">Annuler tous les articles</TextBlock>
+        </Button>
+        
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Button x:Name="BoutonQuitter" Grid.Column="1" Grid.Row="0"  Margin="20,10,20,10" FontSize="25" Click="Quitter_Click">
+                Quitter le mode administrateur
+            </Button>
+        </Grid>
+        
+    </Grid>
+</Window>
