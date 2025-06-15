@@ -13,6 +13,7 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
+            NotifierAdministration(evt);
             if (evt == Evenement.SCAN && this.automate.Caisse.DernierArticleScanne != null)
             {
                 if (!this.automate.Caisse.DernierArticleScanne.IsDenombrable)
@@ -28,6 +29,10 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override Etat Transition(Evenement evt)
         {
+            if (evt == Evenement.ADMIN)
+            {
+                return this;
+            }
             if (evt == Evenement.SCAN)
             {
                 if (this.automate.Caisse.DernierArticleScanne != null && this.automate.Caisse.DernierArticleScanne.IsDenombrable)

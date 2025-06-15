@@ -49,6 +49,8 @@ namespace CaisseAutomatique.Model.Automates
         {
             if (e.PropertyName == "ScanArticleDenombrable")
                 NotifyPropertyChanged("ScanArticleDenombrable");
+            else if (e.PropertyName == "DemandeAdministration")
+                NotifyPropertyChanged("DemandeAdministration");
         }
 
         // INotifyPropertyChanged implementation

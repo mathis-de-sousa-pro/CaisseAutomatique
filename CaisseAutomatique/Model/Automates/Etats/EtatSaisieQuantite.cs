@@ -13,6 +13,7 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
+            NotifierAdministration(evt);
             if (evt == Evenement.SAISIEQUANTITE && this.automate.Caisse.DernierArticleScanne != null)
             {
                 this.automate.Caisse.EnregistrerArticle(this.automate.Caisse.DernierArticleScanne, this.automate.Caisse.QuantiteSaise);
@@ -31,6 +32,10 @@ namespace CaisseAutomatique.Model.Automates.Etats
                 {
                     return new EtatProblemePoids(this.automate, this);
                 }
+            }
+            else if (evt == Evenement.ADMIN)
+            {
+                return this;
             }
             return this;
         }

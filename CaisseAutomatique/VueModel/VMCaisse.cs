@@ -117,6 +117,10 @@ namespace CaisseAutomatique.VueModel
             {
                 this.OuvrirEcranSelectionQuantite();
             }
+            else if (e.PropertyName == "DemandeAdministration")
+            {
+                this.OuvrirEcranAdministration();
+            }
         }
 
         /// <summary>
@@ -193,6 +197,7 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void DebutModeAdministration()
         {
+            this.automate.Activer(Evenement.ADMIN);
         }
 
         /// <summary>
@@ -200,6 +205,7 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void FinModeAdministration()
         {
+            // rien à faire pour le moment
         }
 
         /// <summary>
@@ -207,6 +213,8 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void AnnuleDernierArticle()
         {
+            this.metier.AnnulerDernierArticle();
+            this.automate.Activer(Evenement.RETIRE);
         }
 
         /// <summary>
@@ -214,6 +222,8 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void AnnuleTousLesArticles()
         {
+            this.metier.AnnulerTousLesArticles();
+            this.automate.Activer(Evenement.RETIRE);
         }
 
         ///----------------------
