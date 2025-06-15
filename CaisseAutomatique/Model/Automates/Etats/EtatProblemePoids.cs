@@ -16,7 +16,7 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
-            // aucune action
+            NotifierAdministration(evt);
         }
 
         public override Etat Transition(Evenement evt)
@@ -31,6 +31,10 @@ namespace CaisseAutomatique.Model.Automates.Etats
             else if (evt == Evenement.SCAN || evt == Evenement.PAYE)
             {
                 // ignore events while problem persists
+            }
+            else if (evt == Evenement.ADMIN)
+            {
+                return this;
             }
             return this;
         }

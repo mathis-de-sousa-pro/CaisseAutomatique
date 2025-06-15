@@ -30,6 +30,7 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override void Action(Evenement evt)
         {
+            NotifierAdministration(evt);
             if (evt == Evenement.RESET)
             {
                 this.automate.Caisse.Reset();
@@ -48,6 +49,10 @@ namespace CaisseAutomatique.Model.Automates.Etats
                 {
                     return new EtatProblemePoids(this.automate, this);
                 }
+            }
+            else if (evt == Evenement.ADMIN)
+            {
+                return this;
             }
             return this;
         }

@@ -36,3 +36,11 @@
 
 ### Automate actuel
 L'automate comporte désormais les états : `EtatAttenteClient`, `EtatAttenteDepot`, `EtatAttenteArticle`, `EtatProblemePoids`, `EtatSaisieQuantite` et `EtatFin` reliés par les évènements **SCAN**, **DEPOSE**, **RETIRE**, **PAYE**, **RESET** et **SAISIEQUANTITE** permettant de gérer la saisie de quantité pour les articles dénombrables.
+
+### Gestion du mode administrateur
+- ajout de l'évènement **ADMIN** déclenchant l'ouverture de l'interface d'administration
+- possibilité d'annuler le dernier article ou l'ensemble de la commande via cette interface
+- après une annulation, l'automate vérifie à nouveau le poids afin de détecter un éventuel écart
+
+### Automate avec administration
+Les états restent identiques mais acceptent désormais l'évènement **ADMIN** qui n'entraîne pas de changement d'état et demande l'ouverture de l'écran d'administration.

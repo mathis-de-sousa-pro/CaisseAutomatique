@@ -138,6 +138,32 @@ namespace CaisseAutomatique.Model
         }
 
         /// <summary>
+        /// Annule le dernier article enregistré
+        /// </summary>
+        public void AnnulerDernierArticle()
+        {
+            if (this.articles.Count > 0)
+            {
+                this.articles.RemoveAt(this.articles.Count - 1);
+                this.dernierArticleScanne = this.articles.Count > 0 ? this.articles[^1] : null;
+                this.NotifyPropertyChanged(nameof(Articles));
+            }
+        }
+
+        /// <summary>
+        /// Annule tous les articles de la commande
+        /// </summary>
+        public void AnnulerTousLesArticles()
+        {
+            if (this.articles.Count > 0)
+            {
+                this.articles.Clear();
+                this.dernierArticleScanne = null;
+                this.NotifyPropertyChanged(nameof(Articles));
+            }
+        }
+
+        /// <summary>
         /// Remise à zéro de la caisse pour un nouveau client
         /// </summary>
         public void Reset()

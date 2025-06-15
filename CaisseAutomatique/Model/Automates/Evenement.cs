@@ -11,6 +11,7 @@ namespace CaisseAutomatique.Model.Automates
         RESET,
         DEPOSE,
         RETIRE,
-        SAISIEQUANTITE
+        SAISIEQUANTITE,
+        ADMIN
     }
 }

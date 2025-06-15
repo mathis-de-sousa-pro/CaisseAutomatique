@@ -44,5 +44,17 @@ namespace CaisseAutomatique.Model.Automates
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// Notification d'ouverture du mode administrateur
+        /// </summary>
+        /// <param name="evt">Evènement reçu</param>
+        protected void NotifierAdministration(Evenement evt)
+        {
+            if (evt == Evenement.ADMIN)
+            {
+                NotifyPropertyChanged("DemandeAdministration");
+            }
+        }
     }
 }
