@@ -93,6 +93,41 @@ namespace CaisseAutomatique.Model
         }
 
         /// <summary>
+        /// Enregistre un article scanné par le client
+        /// </summary>
+        /// <param name="article">Article scanné</param>
+        public void EnregistrerArticle(Article article)
+        {
+            this.articles.Add(article);
+            this.dernierArticleScanne = article;
+            this.NotifyPropertyChanged(nameof(Articles));
+        }
+
+        /// <summary>
+        /// Encaisse le paiement complet du client
+        /// </summary>
+        public void Payer()
+        {
+            this.sommePayee = this.PrixTotal;
+            this.NotifyPropertyChanged(nameof(SommePayee));
+        }
+
+        /// <summary>
+        /// Remise à zéro de la caisse pour un nouveau client
+        /// </summary>
+        public void Reset()
+        {
+            this.articles.Clear();
+            this.dernierArticleScanne = null;
+            this.quantiteSaisie = 0;
+            this.poidsBalance = 0;
+            this.sommePayee = 0;
+            this.NotifyPropertyChanged(nameof(Articles));
+            this.NotifyPropertyChanged(nameof(SommePayee));
+            this.NotifyPropertyChanged("Reset");
+        }
+
+        /// <summary>
         /// Pattern d'observable
         /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;

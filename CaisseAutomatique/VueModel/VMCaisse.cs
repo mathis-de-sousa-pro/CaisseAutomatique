@@ -60,7 +60,7 @@ namespace CaisseAutomatique.VueModel
             this.metier = new Caisse();
             this.metier.PropertyChanged += Metier_PropertyChanged;
             this.articles = new ObservableCollection<Article>();
-            this.automate = new Automate();
+            this.automate = new Automate(this.metier);
             this.automate.PropertyChanged += Automate_PropertyChanged;
             this.AjouterLigneTotalEtResteAPayer();
         }
@@ -137,6 +137,8 @@ namespace CaisseAutomatique.VueModel
         /// <param name="vueArticle">Vue de l'article scanné</param>
         public void PasseUnArticleDevantLeScannair(VueArticle vueArticle)
         {
+            this.metier.EnregistrerArticle(vueArticle.Article);
+            this.Scan();
         }
 
         /// <summary>
@@ -169,6 +171,11 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void Paye()
         {
+            if (this.metier.Articles.Count > 0)
+            {
+                this.metier.Payer();
+                this.automate.Activer(Evenement.PAYE);
+            }
         }
 
         /// <summary>
@@ -208,6 +215,7 @@ namespace CaisseAutomatique.VueModel
         /// </summary>
         public void Scan()
         {
+            this.automate.Activer(Evenement.SCAN);
         }
 
         // Implementation of INotifyPropertyChanged

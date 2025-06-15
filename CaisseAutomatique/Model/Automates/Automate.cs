@@ -1,4 +1,5 @@
 using System;
+using CaisseAutomatique.Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -12,13 +13,17 @@ namespace CaisseAutomatique.Model.Automates
         private Etat etatCourant;
         public Etat EtatCourant { get => etatCourant; private set => etatCourant = value; }
 
+        private Caisse caisse;
+        public Caisse Caisse => caisse;
+
         /// <summary>
         /// Message actuel de la caisse (donné par l'état courant)
         /// </summary>
         public string Message => this.etatCourant.Message;
 
-        public Automate()
+        public Automate(Caisse caisse)
         {
+            this.caisse = caisse;
             this.etatCourant = new Etats.EtatAttenteClient(this);
         }
 

@@ -16,8 +16,11 @@ namespace CaisseAutomatique.Model.Automates.Etats
 
         public override Etat Transition(Evenement evt)
         {
-            // Pour l'instant, la transition revient sur le même état
-            return new EtatAttenteClient(this.automate);
+            if (evt == Evenement.SCAN)
+            {
+                return new EtatAttenteArticle(this.automate);
+            }
+            return this;
         }
 
         public override string Message => "Bonjour, scannez votre premier article !";
