@@ -11,7 +11,13 @@
 - mise en place d'un timer dans `EtatFin` pour déclencher l'évènement `RESET` automatiquement
 - ajout de l'accès à la `Caisse` depuis l'automate afin que les états puissent appeler les méthodes métier
 
+### Gestion de la balance
+- ajout de l'évènement **DEPOSE** puis **RETIRE** pour signaler les interactions avec la balance
+- création des états `EtatAttenteDepot` et `EtatProblemePoids`
+- mise à jour des transitions pour vérifier le poids après chaque action sur la balance
+
 ### Travail réalisé sur la classe `Caisse`
+- ajout des méthodes `PoserArticleSurBalance` et `EnleverArticleDeLaBalance` qui mettent à jour `PoidsBalance`
 - ajout de `EnregistrerArticle`, `Payer` et `Reset` pour gérer respectivement l'enregistrement d'un article, le paiement complet et la remise à zéro
 
 ### Travail réalisé sur le `VueModel`

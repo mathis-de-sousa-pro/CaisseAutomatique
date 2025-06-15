@@ -42,6 +42,13 @@ namespace CaisseAutomatique.Model.Automates.Etats
             {
                 return new EtatAttenteClient(this.automate);
             }
+            else if (evt == Evenement.DEPOSE || evt == Evenement.RETIRE)
+            {
+                if (this.automate.Caisse.PoidsBalance != this.automate.Caisse.PoidsAttendu)
+                {
+                    return new EtatProblemePoids(this.automate, this);
+                }
+            }
             return this;
         }
 

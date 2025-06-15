@@ -83,6 +83,27 @@ namespace CaisseAutomatique.Model
         }
 
         /// <summary>
+        /// Ajoute le poids d'un article sur la balance
+        /// </summary>
+        /// <param name="article">Article posé</param>
+        public void PoserArticleSurBalance(Article article)
+        {
+            this.poidsBalance += article.Poids;
+            this.NotifyPropertyChanged(nameof(PoidsBalance));
+        }
+
+        /// <summary>
+        /// Enlève le poids d'un article de la balance
+        /// </summary>
+        /// <param name="article">Article retiré</param>
+        public void EnleverArticleDeLaBalance(Article article)
+        {
+            this.poidsBalance -= article.Poids;
+            if (this.poidsBalance < 0) this.poidsBalance = 0;
+            this.NotifyPropertyChanged(nameof(PoidsBalance));
+        }
+
+        /// <summary>
         /// Saisie d'une quantité pour un article dénombrable
         /// </summary>
         /// <param name="valeur">Valeur de la quantité</param>
